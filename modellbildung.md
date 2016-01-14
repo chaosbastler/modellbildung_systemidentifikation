@@ -1,4 +1,8 @@
 #Zusammenfassung Modellbildung und Systemidentifikation
+##Grundlagen
+###Modellarten
+* ARX
+* TODO
 
 ##MkQ für Statische Systeme
 ### Parameterlineare Modelle
@@ -31,3 +35,32 @@ Verfahren:
 
 
 ## MkQ für Dynamische Systeme
+### Dynamisch zeitdiskrete Systeme
+Dynamische Modelle = ARX (autoregressive) Modelle
+### Dynamisch zeitkontinuierliche Systeme
+Ausgangspunkt: DGL
+Problem: Ableitungen beschaffen
+
+Lösung:
+a) Finite Differenzen (Vorwärts/Rückwärtsdifferenz)
+Störanfällig, Messrauschen wird verstärkt
+
+b) Filterung von Ein- und Ausgangssignalen
+
+Idee: Ausnutzen von Eigenschaften des Faltungsoperators
+
+$d/dt( x(t) * g(t) ) = x(t) * d/dt(g(t))$ (g(t): Impulsantwort)
+
+Zustandsvariablenfilter:
+
+Ansatz:
+
+$F(s) = \frac{f_0}{f_0+f_1 s + ... + s^n}$
+
+Adaptives Zustandsvariablenfilter:
+
+z.B. Butterworth-Filter
+
+### Wann sind physikalische Parameter vollständig identifizierbar?
+* np = n+m+1
+Jacobi-Matrix \delta f / \delta p ist regulär

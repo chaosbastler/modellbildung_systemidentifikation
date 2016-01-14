@@ -37,11 +37,14 @@ Verfahren:
 ## MkQ für Dynamische Systeme
 ### Dynamisch zeitdiskrete Systeme
 Dynamische Modelle = ARX (autoregressive) Modelle
+
 ### Dynamisch zeitkontinuierliche Systeme
 Ausgangspunkt: DGL
+
 Problem: Ableitungen beschaffen
 
 Lösung:
+
 a) Finite Differenzen (Vorwärts/Rückwärtsdifferenz)
 Störanfällig, Messrauschen wird verstärkt
 
@@ -62,5 +65,30 @@ Adaptives Zustandsvariablenfilter:
 z.B. Butterworth-Filter
 
 ### Wann sind physikalische Parameter vollständig identifizierbar?
-* np = n+m+1
-Jacobi-Matrix \delta f / \delta p ist regulär
+* $np = n+m+1$
+* Jacobi-Matrix $\delta f / \delta p$ ist regulär
+
+## Rekursive MkQ
+Iterationsvorschrift -> siehe Skript
+
+### Bestimmung der Startwerte
+####Nutzung der nicht-rekursiven MkQ
+####Wahl von Standardwerten
+
+Startwertwahl von a_0 = 0 $P_0 = 1/\alpha I$ (I: Einheitsmatrix).
+Dies führt für große Alpha zu $P_k \approx \phi_k^T \phi_k$
+
+## Rekursive MkQ mit exponentiell nachlassendem Gedächtnis
+
+
+## Rechentechnische Umsetzung der MkQ
+TODO
+
+## Identifikation nicht-linearer Systeme
+**Hammerstein-Modell**:
+nicht-linear statisches System + dynamisch lineares System
+
+Einfacher Ansatz für nicht-Linearität:
+$\widetilde{u}[k] = r_0 + r_1 \cdot u[k] + ... r_p \cdot {u[k]}^p$
+
+Ergibt lineares Modell mit mehreren Eingängen, darstellbar in der Form $y[k] = \phi a$

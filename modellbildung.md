@@ -92,3 +92,83 @@ Einfacher Ansatz für nicht-Linearität:
 $\widetilde{u}[k] = r_0 + r_1 \cdot u[k] + ... r_p \cdot {u[k]}^p$
 
 Ergibt lineares Modell mit mehreren Eingängen, darstellbar in der Form $y[k] = \phi a$
+
+
+##2.7 Modifikationen der MkQ
+###2.7.1 Totale MkQ (orthogonale Regression)
+Minimierung des Fehlers der Ausgangsdaten F und des Fehlers der Eingangsdaten $\epsilon$:
+
+$y + \epsilon = (\Phi + F)a$
+
+=> $[(\Phi y) + (F \epsilon)] \begin{pmatrix}a\\-1\end{pmatrix}$
+
+=> Minimierung von $(F \epsilon)$ im Sinne der Frobeniusnorm.
+
+###Einschub: Singulärwertzerlegung
+Mann kann Matrizen unter gewissen Vorraussetzungen folgendermaßen zerlegen:
+
+$C = U \Sigma V^T$
+
+TODO
+
+###2.7.2 Methode der Hilfsvariablen
+Anwendung: bei verzerrten Schätzern (ARX-Modell nicht perfekt)
+
+Prinzip: Multiplikation der Modellfehlergleichung mit sog. Hilfsvariablen:
+$W^T \epsilon = W^T y - W^T \Phi a$
+
+W ist so wählen, dass Spalten unkorreliert mit $\epsilon$ sind.
+
+=> Lösung der modifizierten Normalengleichung: $a = (W^T \Phi)^-1 W^T y$
+
+Wahl von W:
+
+1. Schätzen von Parametervektor mit MkQ: $\hat{a} = \Phi^+ y$
+
+2. Simulation des Models $\hat{y} = \Phi \hat{a}$
+
+3. W = ... (siehe Skript)
+
+4. Schätzung mittels Hilfsvariablen
+
+Iteratives Wiederholen von 2-4 beseitigt Bias von MkQ Schätzer
+
+#3. Subspace-based State-Space System Identification (4 SID)
+##3.1 Grundgleichungen, Zustandsraummodelle
+Zustandsraummodell:
+
+$x[k+1] = A x[x] + B u[k]$ - Folgezustand abhängig von aktuellem Zustand + Eingang
+
+$y[k] = C x[k] + D u[k]$ - Ausgang abhängig von Zustand ü Eingang
+
+Problem: Weder Zustandsfolge x[k] noch Zustandsdimension n bekannt
+
+$\begin{pmatrix}y[0]\\y[1]\\...\\y[k-1]\end{pmatrix} = \begin{pmatrix}C\\C A\\C A^2 \\...\\C A^{k-1}\end{pmatrix} x[0] +
+\begin{pmatrix}
+D & 0 & ... & 0 \\
+C B & D & ... & 0 \\
+.... & ... & D & 0 \\
+C A^{k-2} B & C A^{k-3} B & CB & D
+\end{pmatrix} \begin{pmatrix}u[0]\\u[1]\\...\\u[k-1]\end{pmatrix}$
+
+Bezeichnungen: $\begin{pmatrix}C\\C A\\C A^2 \\...\\C A^{k-1}\end{pmatrix} := Q_{B,k} = Beobachtbarkeitsmatrix$
+
+TODO ...
+
+### Subspace-Gleichungen
+$Y_p = Q_{B,k} X_p + H_K U_p$
+
+$Y_f = Q_{B,k} X_f + H_K U_f$
+
+$X_f = A^k x_p + Q_{S,k} U_p$
+
+mit $Q_{S,k} = (A^{k-1} B  \;   A^{k-2} B \;       A B \;  B)$ (erweiterte Steuerbarkeitsmatrix)
+
+
+Durch Umformen/Einsetzten ergibt sich:
+
+$X_f = ... $ (nur abhängig von Vergangenheit)
+
+$Y_f = Q_{B-k} L_{P,k} (U_p \; y_p)^T + H_k U_f$
+
+=> Für nächsten Ausgang Wissen der zukünftigen Eingabe erforderlich

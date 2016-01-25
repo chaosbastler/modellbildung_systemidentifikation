@@ -172,3 +172,46 @@ $X_f = ... $ (nur abhängig von Vergangenheit)
 $Y_f = Q_{B-k} L_{P,k} (U_p \; y_p)^T + H_k U_f$
 
 => Für nächsten Ausgang Wissen der zukünftigen Eingabe erforderlich
+###3.2 Grundlagen: Projektion
+TODO
+
+...
+
+
+### Ablaufschema 4 SID
+* Messdaten u[i], y[i] aufnehmen, in Hankelmatrizen U, Y anordnen
+* Schiefen Prädiktor P berechnen
+* SVD von P
+(Schätzung der Systemordnung (Länge Zustandsvektor); Schätzung für Beobachtbarkeitsmatrix $Q_{B,k}$)
+ * Berechnen von A, C
+ * Berechnen von B, D
+
+# Kalman-Filter
+Modell:
+
+x[k+1] = A x[k] + B u[k] + v[k]
+
+y[k] = C x[k] + e[k]
+
+## Annahmen
+* Systemmatrizen A,B,C,D bekannt
+* Eingang u[k], Ausgang y[k] bekannt
+* Ziel: Zustandsvektor x[k] schätzen
+* Systemrauschen v[k] und Messrauschen e[k]: unkorrelierte, mittelwertfreie Rauschprozesse
+
+## Filterstruktur
+$\hat{x}[k+1]$ = Prädiktionsterm + Korrekturterm = $( A \hat{x}[k] + B u[k] ) + (K[k] (y[k]-\hat{x}[x]))$
+
+K[k]: Kalman-Matrix, so gewählt, dass Kovarianz von Schätzfehler $\tilde{x}[k+1] = \hat{x}[k+1] - x[k+1]$ minimiert wird
+
+
+=> K[k] = P[k] C^T (Y- C P[k] C^T)^{-1}
+
+P[k] = A P[k] A^T + V - K[k] C P[k]
+
+Ergebnis: erwartungstreuer Schätzer mit kleinster Varianz
+
+## Filteralgorithmus
+* Init
+* Prädiktion (Schätzung des Zustands auf Basis der Messwerte zum Zeitpunkt k)
+* Korrektur (Berechnung der Kalman-Matrix, Korrektur der Zustandsschätzung anhand des neuen Messertes y[k+1]: a posteriori Schätzung)

@@ -215,3 +215,54 @@ Ergebnis: erwartungstreuer Schätzer mit kleinster Varianz
 * Init
 * Prädiktion (Schätzung des Zustands auf Basis der Messwerte zum Zeitpunkt k)
 * Korrektur (Berechnung der Kalman-Matrix, Korrektur der Zustandsschätzung anhand des neuen Messertes y[k+1]: a posteriori Schätzung)
+
+#5. Identifikation nichtparametrischer Modelle
+
+##5.1 Frequenzgang mit period. Anregung
+
+### Variante 1: Anregung mit harmon. Eingangssignal (Sinus)
+
+* Nach Einschwingen: Amplitude + Phase messen
+* Wiederholung für versch. Frequenzen
+
+Problem: reine Sinusschwingungen schwierig zu erzeugen
+
+### Variante 2: Anregung mit Trapez- oder Rechtecksignal
+
+* Beginn bei hohen Frequenzen
+* Bei kleineren Anregungsfrequenzen: Berücksichtigung der höheren harmonischen notwendig
+* Aus vorherigen Messungen ist Übertragungsverhalten für hohe Frequenzen bekannt -> Signalanteile können subtrahiert werden; somit wird Grundschwingung isoliert
+
+Nachteil: zeitaufwendig, da warten auf Einschwingen
+
+Ausweg: Signale mit mehreren Frequenzanteilen
+
+Allgemeine Nachteile:
+
+* nur stabile Systeme
+* keine passive Messungen
+* nur kleine Störsignale
+
+##5.2 Korrelationsanalyse
+###5.2.1 Schätzung der Korrelationsfunktion
+Def. Kreuzkorrelationsfolge: $R_{u y}[j] = \lim\limits_{N \to \infty} \frac{1}{N} \sum \limits_{k=0}^{N-1} u[k-j] y[k]$
+
+Def. Autokorrelationsfolge: $R_u[j] = R_{u u}[j] = \lim\limits_{N \to \infty} \frac{1}{N} \sum \limits_{k=0}^{N-1} u[k-j] u[k]$
+
+Eigenschaften:
+
+* $R_{u y}[j] = R_{y u}[-j]$
+* $R_{u}[j] = R_{u}[-j]$
+
+Problem: Messung nur über endlichen Zeithorizont => Schätzung
+
+Schätzung der Autokorrelationsfolge:
+$\hat{R}_{u}[j] =  \lim\limits_{N \to \infty} \frac{1}{N} \sum \limits_{k=0}^{N-|j|-1} u[k-|j|] u[k]$
+
+Bemerkung: Schätzung $\hat{R}_{u}[j]$ ist nicht erwartungstreu:
+$E\{\hat{R}_{u}[j]\} = (1-\frac{|j|}{N})R_u[j]$
+
+Andere Möglichkeit:
+$\hat{R}_{u}'[j] =  \lim\limits_{N \to \infty} \frac{1}{N-|j|} \sum \limits_{k=0}^{N-|j|-1} u[k-|j|] u[k]$
+
+Dieser Schätzer ist erwartungstreu, weist aber eine um den Faktor $N/(N-|j|)$ größere Varianz auf -> Praktisch wird ersterer verwendet

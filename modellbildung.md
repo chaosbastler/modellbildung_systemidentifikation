@@ -141,19 +141,43 @@ $x[k+1] = A x[x] + B u[k]$ - Folgezustand abhängig von aktuellem Zustand + Eing
 
 $y[k] = C x[k] + D u[k]$ - Ausgang abhängig von Zustand ü Eingang
 
+Bekannt: N Messdatenpaare u[k], y[k]
+
 Problem: Weder Zustandsfolge x[k] noch Zustandsdimension n bekannt
 
-$\begin{pmatrix}y[0]\\y[1]\\...\\y[k-1]\end{pmatrix} = \begin{pmatrix}C\\C A\\C A^2 \\...\\C A^{k-1}\end{pmatrix} x[0] +
-\begin{pmatrix}
+$\begin{pmatrix}y[0]\\y[1]\\...\\y[k-1]\end{pmatrix} = \underbrace{\begin{pmatrix}C\\C A\\C A^2 \\...\\C A^{k-1}\end{pmatrix}}_{{\substack{Q_{B,k}\\\text{Beobachtbarkeitsmatrix} } }} x[0] +
+\underbrace{\begin{pmatrix}
 D & 0 & ... & 0 \\
 C B & D & ... & 0 \\
 .... & ... & D & 0 \\
 C A^{k-2} B & C A^{k-3} B & CB & D
-\end{pmatrix} \begin{pmatrix}u[0]\\u[1]\\...\\u[k-1]\end{pmatrix}$
+\end{pmatrix}}_{H_k} \begin{pmatrix}u[0]\\u[1]\\...\\u[k-1]\end{pmatrix}$
 
-Bezeichnungen: $\begin{pmatrix}C\\C A\\C A^2 \\...\\C A^{k-1}\end{pmatrix} := Q_{B,k} = Beobachtbarkeitsmatrix$
+Zusammenfassung in Blockmatrizen:
 
-TODO ...
+$Y =  \begin{pmatrix}
+y[0] & ... & y[N-2k] \\
+\dots & ... & ... \\
+y[k-1] & ... & y[N-k-1] \\
+- - - & - - - & - - - \\
+y[k] & ... & y[N-k] \\
+\dots & ... & ... \\
+y[2k-1] & ... & y[N-1]
+\end{pmatrix}
+=  \begin{pmatrix}
+Y_f  \\
+Y_p
+\end{pmatrix}$
+
+Analog für:
+$U = \begin{pmatrix}
+U_f  \\
+U_p
+\end{pmatrix}$
+
+
+
+
 
 ### Subspace-Gleichungen
 $Y_p = Q_{B,k} X_p + H_K U_p$
@@ -294,3 +318,5 @@ Dann folgt:
 $\hat{R}_{u y} = \hat{\sigma}^2 g[i]$
 
 => Schätzung für Gewichtsfolge: $\hat{g}[i] = \frac{1}{\hat{\sigma}^2}  \hat{R}_{u y}$
+
+##Parameterschätzung für Differenzengleichungen

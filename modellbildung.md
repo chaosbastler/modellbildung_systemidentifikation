@@ -177,8 +177,6 @@ U_p
 
 
 
-
-
 ### Subspace-Gleichungen
 $Y_p = Q_{B,k} X_p + H_K U_p$
 
@@ -196,11 +194,46 @@ $X_f = ... $ (nur abhängig von Vergangenheit)
 $Y_f = Q_{B-k} L_{P,k} (U_p \; y_p)^T + H_k U_f$
 
 => Für nächsten Ausgang Wissen der zukünftigen Eingabe erforderlich
+
 ###3.2 Grundlagen: Projektion
-TODO
+###3.2.1 Orthogonale Projektion
+![Projektion im 2D Raum](img/projektion_1.png "Orthogonale Projektion")\
 
-...
 
+Im zweidimensionalen lässt sich der Projektor $p$ folgendermaßen bestimmen: $p = a \cos{\alpha} \frac{|a|}{|b|} = a \frac{b^T b}{b b^T}$
+
+
+
+###3.2.2 Schiefe Projektion
+
+![Schiefe Projektion in der Ebene](img/projektion_2.png "Schiefe Projektion")\
+
+
+### Allgemeine schiefe Projektion
+![Schiefe Projektion im 3D Raum](img/projektion_4.png "Schiefe Projektion im Raum")\
+
+Vorgehen:
+
+* Senkrechte Projektion in die von B und C aufgespannte Ebene
+* Schiefe Projektion der Ebene
+
+
+Definition: Allgemeine schiefe Projektion entlang des Orthogonalkomplements von C auf B:
+
+$$ A/_C B := A \cdot \Pi $$
+
+mit: $$ \Pi =
+\begin{pmatrix}
+B^T &  C^T
+\end{pmatrix}
+\begin{pmatrix}
+B B^T & B C^T\\
+C B^T & C C^T
+\end{pmatrix}^+
+\begin{pmatrix}
+B\\
+0
+\end{pmatrix}$$
 
 ### Ablaufschema 4 SID
 * Messdaten u[i], y[i] aufnehmen, in Hankelmatrizen U, Y anordnen

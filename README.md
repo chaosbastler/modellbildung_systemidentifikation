@@ -1,5 +1,4 @@
 # modellbildung_systemidentifikation
-Zusammenfassung zur Vorlesung
-Use pandoc[http://pandoc.org/installing.html] for creating the PDF:
+Zusammenfassung zur Vorlesung; Ziel: alles inhaltlich relevante ohne lange Herleitungen in digitaler Form
 
-pandoc -o modellbildung.pdf modellbildung.md
+Use pandoc[http://pandoc.org/installing.html] for creating the PDF. The makefile will handle the building process.

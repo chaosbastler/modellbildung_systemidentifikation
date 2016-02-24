@@ -1,5 +1,5 @@
 #Zusammenfassung Modellbildung und Systemidentifikation
-##Grundlagen
+#1. Grundlagen
 ###Norm
 Motivation: Maß für Fehler ist notwendig
 
@@ -46,7 +46,7 @@ $$ G(\alpha_1 u_1 + \alpha_2 u_2 ) = \alpha_1 \cdot G \circ u_1 + \alpha_2 \cdot
 * nicht-parametrische Modellierung: Sprungantwort, Impulsantwort, Frequenzgang
 
 ### Parametrische Modelle
-physikalische Modellierung => DLG => Laplace-Transformation => Zustandsraummdell mit Systemmatrizen
+physikalische Modellierung => DGL => Laplace-Transformation => Zustandsraummdell mit Systemmatrizen
 
 Abtastung liefert diskretes Modell:
 
@@ -63,6 +63,7 @@ $$C_D = C^C$$
 
 u(z) : Systemeingang,
 v(z) : Fehler
+
 ### Klassifikation nach Störung
 
 #### AR (autoregressives System)

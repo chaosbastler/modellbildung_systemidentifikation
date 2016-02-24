@@ -1,36 +1,84 @@
 \newpage
+#2. Methode der kleinsten Fehlerquadrate
+Gegeben: Messdatenpaare, Modell y = f(u,a)
+
+Ziel: finde Parameter a, so dass $y_i \approx f(u_i,a)$ für Daten möglichst gut erfüllt wird
+
+-> Überbestimmtes Probem -> Minimierung von Modellfehler $$\epsilon_i = y_i - f(u_i,a)$$
+
+Gütekriterium: $$L(a) = \sum \limits_{i=1}^{N} \epsilon_i^2 = \epsilon^T \cdot \epsilon$$
+
 ##MkQ für Statische Systeme
 ### Parameterlineare Modelle
 **Prinzip:** Kostenfunktion $\epsilon^T \cdot \epsilon$ definieren und minimieren (Variante: Gewichtete Kostenfunktion)
 
 mit $\epsilon	 = \text{Messwert} - \text{Modell}$
 
-$y=\phi \cdot p$
+Gleichungssystem in Matrix-Form:
 
-Mit Ableitung ergibt sich Lösung :
+$\begin{pmatrix}
+y_1 \\
+\dots \\
+y_n
+\end{pmatrix} =
+\begin{pmatrix}
+\phi^T(u_1) \\
+\dots \\
+\phi^T(u_N)
+\end{pmatrix}
+\begin{pmatrix}
+a_1 \\
+\dots \\
+a_n\\
+\end{pmatrix}$
 
-$p = (\phi^T \cdot \phi)^-1 \cdot \phi \cdot y = \phi^+ \cdot y$
+$y=\phi \cdot a$
+
+Fehlerfunktion: $L(a) = \epsilon^T \epsilon = (y- \Phi a)^T (y- \Phi a) = y^T y - 2 y^T \Phi a + (\Phi a)^T \Phi a$
+
+Partielle Ableitung nach a:
+$L'(a) = - 2 y^T \Phi + 2 a^T \Phi^T \Phi \stackrel{!}{=} 0$
+
+$$y^T \Phi = a^T \Phi^T \Phi$$
+$$\Phi^T y = \Phi^T \Phi a$$
+
+Gleichung umstellen ergibt Lösung :
+
+$a = (\phi^T \cdot \phi)^{-1} \cdot \phi \cdot y = \phi^+ \cdot y$
 
 Singulärwertzerlegung (SVD) kann für einfache Berechnung von $\phi^+$ genutzt werden:
 
-$\phi = U \cdot \Sigma \cdot V^T  \rightarrow \phi^+ = V \cdot \Sigma^T  \cdot U^T$
+$\phi = U \cdot \Sigma \cdot V^T  \rightarrow \phi^+ = V \cdot \Sigma^+  \cdot U^T$
+
+mit: $\Sigma^+ = diag(\frac{1}{\sigma_1},\frac{1}{\sigma_2},...,\frac{1}{\sigma_n},0,...,0)$
 
 ### ParameterNICHTlineare Modelle
 Ansatz wie bei parameterlinearen Modellen.
 
-**Problem:** nichtlineare Gleichungen
+**Problem:** nichtlineare Gleichungen, Minimum nicht so einfach bestimmbar
 
-**Lösung:** Linearisierung der Fehlergleichung
+**Lösung:** Linearisierung der Fehlergleichung (in jedem Iterationsschritt)
 
-Verfahren:
+Statt $\epsilon$ wird $\epsilon + \Delta \epsilon$ minimiert:
 
-* Gauß-Newton-Verfahren (gegf. mit Dämpfungsfaktor)
-* Gradientenverfahren (line search)
-* Levenberg-Marquardt-Algorithmus
+$$\epsilon + \Delta \epsilon = \underbrace{y - f(u,a(u))}_{\epsilon} \underbrace{- \frac{\partial f}{\partial a} (u,a(u)) \cdot \Delta a(u)}_{\Delta \epsilon}$$
 
+#### Gauß-Newton-Verfahren (gegf. mit Dämpfungsfaktor)
+* Iterationsvorschrift: $a_{i+1} = a_i + \Delta a_i = a_i + J_i^T (y-f(u,a_i))$
+* keine gesicherte Konvergenz
+* => Dämpfungsfaktor: $a_{i+1} =  a_i + \alpha J_i^T (y-f(u,a_i))$
 
+#### Gradientenverfahren (line search)
+* Iterationsvorschrift: $a_{i+1} = a_i + \alpha (\frac{\partial f}{\partial a} (u,a_i)^T$
+* $\alpha$ so wählen, dass L minimal wird
+
+#### Levenberg-Marquardt-Algorithmus
+* robuster als Gauß-Newton-Verfahren
+-> Formel siehe Skript
+
+\newpage
 ## MkQ für Dynamische Systeme
-### Dynamisch zeitdiskrete Systeme
+###2.2 Dynamisch zeitdiskrete Systeme
 Dynamische Modelle = ARX (autoregressive) Modelle
 
 ### Dynamisch zeitkontinuierliche Systeme

@@ -8,7 +8,7 @@ Ziel: finde Parameter a, so dass $y_i \approx f(u_i,a)$ für Daten möglichst gu
 
 Gütekriterium: $$L(a) = \sum \limits_{i=1}^{N} \epsilon_i^2 = \epsilon^T \cdot \epsilon$$
 
-##MkQ für Statische Systeme
+##2.1 MkQ für Statische Systeme
 ### Parameterlineare Modelle
 **Prinzip:** Kostenfunktion $\epsilon^T \cdot \epsilon$ definieren und minimieren (Variante: Gewichtete Kostenfunktion)
 
@@ -77,19 +77,82 @@ $$\epsilon + \Delta \epsilon = \underbrace{y - f(u,a(u))}_{\epsilon} \underbrace
 -> Formel siehe Skript
 
 \newpage
-## MkQ für Dynamische Systeme
-###2.2 Dynamisch zeitdiskrete Systeme
-Dynamische Modelle = ARX (autoregressive) Modelle
+##2.2 MkQ für Dynamische Systeme
+###Dynamisch zeitdiskrete Systeme
 
-### Dynamisch zeitkontinuierliche Systeme
-Ausgangspunkt: DGL
+* Dynamische Modelle = ARX (autoregressive) Modelle
+* Differenzengleichung der Form:
+$$y[k] = b_m u[k-m]+ b_{m-1} u[k-m+1] + \dots + b_{0} u[k] + \epsilon[k] - (a_n y[k-n] + \dots + a_1 y[k-1])$$
+* (Sonderfall: FIR mit $y[k] = b_m u[k-m]+ b_{m-1} u[k-m+1] + \dots + b_{0} u[k]$; Spezialfall Output-Error Modell)
+* Gleichungssystem in Matrix-Form:
+
+$$
+\underbrace{
+\begin{pmatrix}
+y[l] \\
+y[l+1] \\
+\dots \\
+y[N-1]
+\end{pmatrix}}_{Y_{N-1}} =
+\underbrace{
+\begin{pmatrix}
+-y[l-1] & \dots & -y[l-n] & u[l] & \dots & u[l-m] \\
+-y[k]   & \dots & -y[l-n+1] & u[l+1] & \dots & u[l-m+1]\\
+\dots & \dots & \dots & \dots & \dots & \dots \\
+-y[N-2]& \dots & -y[N-1-m] & u[N-1] & \dots & u[N-1-m] \\
+\end{pmatrix}
+}_{\Phi_{N-1}}
+\underbrace{
+\begin{pmatrix}
+a_1 \\
+\dots \\
+a_n\\
+b_1\\
+\dots \\
+b_m\\
+\end{pmatrix}
+}_{a_{N-1}}
+\underbrace{
+\begin{pmatrix}
+e[l] \\
+\\
+\dots \\
+\\
+\\
+e[N-1] \\
+\end{pmatrix}
+}_{\epsilon_{N-1}}
+$$
+
+$$Y_{N-1} = \Phi_{N-1} a_{N-1} + \epsilon_{N-1}$$
+
+* Lösung (Minimierung von $\epsilon_{N-1}$):
+
+$$a_{N-1} = \Phi_{N-1}^+ Y_{N-1} $$
+
+##2.3 Dynamisch zeitkontinuierliche Systeme
+Ausgangspunkt DGL:
+$$y(kT) =
+\begin{pmatrix}
+-y'(kT) & \dots & -y^{(n)}(kT)  & u(kT) & \dots & u^{(m)}(kT))\\
+\end{pmatrix}
+\begin{pmatrix}
+a_1^c \\
+\dots \\
+a_n^c \\
+b_0^c \\
+\dots \\
+b_m^c \\
+\end{pmatrix}$$
 
 Problem: Ableitungen beschaffen
 
-Lösung:
+Beschaffung von Zeitableitungen:
 
 a) Finite Differenzen (Vorwärts/Rückwärtsdifferenz)
-Störanfällig, Messrauschen wird verstärkt
+
+Nachteil:
+Störanfällig, Messrauschen wird verstärkt, schlecht geeignet für höhere Ableitungen
 
 b) Filterung von Ein- und Ausgangssignalen
 
@@ -111,8 +174,13 @@ z.B. Butterworth-Filter
 * $np = n+m+1$
 * Jacobi-Matrix $\delta f / \delta p$ ist regulär
 
-## Rekursive MkQ
+\newpage
+##2.4 Rekursive MkQ
 Iterationsvorschrift -> siehe Skript
+
+Vorteile:
+* TODO
+* ...
 
 ### Bestimmung der Startwerte
 ####Nutzung der nicht-rekursiven MkQ
@@ -124,10 +192,10 @@ Dies führt für große Alpha zu $P_k \approx \phi_k^T \phi_k$
 ## Rekursive MkQ mit exponentiell nachlassendem Gedächtnis
 
 
-## Rechentechnische Umsetzung der MkQ
+##2.5 Rechentechnische Umsetzung der MkQ
 TODO
 
-## Identifikation nicht-linearer Systeme
+##2.6 Identifikation nicht-linearer Systeme
 **Hammerstein-Modell**:
 nicht-linear statisches System + dynamisch lineares System
 

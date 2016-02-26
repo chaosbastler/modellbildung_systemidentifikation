@@ -149,7 +149,10 @@ Problem: Ableitungen beschaffen
 
 Beschaffung von Zeitableitungen:
 
-a) Finite Differenzen (Vorwärts/Rückwärtsdifferenz)
+a) Finite Differenzen (Vorwärts/Rückwärtsdifferenzenquotient)
+
+* $y'(kT) \approx \frac{y(kT)-y((k-1)T}{T}$
+* $y'(kT) \approx \frac{y((k+1)T)-y(kT)}{T}$
 
 Nachteil:
 Störanfällig, Messrauschen wird verstärkt, schlecht geeignet für höhere Ableitungen
@@ -160,49 +163,93 @@ Idee: Ausnutzen von Eigenschaften des Faltungsoperators
 
 $d/dt( x(t) * g(t) ) = x(t) * d/dt(g(t))$ (g(t): Impulsantwort)
 
-Zustandsvariablenfilter:
-
-Ansatz:
+Zustandsvariablenfilter mit Ansatz:
 
 $F(s) = \frac{f_0}{f_0+f_1 s + ... + s^n}$
 
-Adaptives Zustandsvariablenfilter:
+Adaptives Zustandsvariablenfilter
+
+Iterationsvorschrift:
+
+* Schätzung Nennerpolynom $\hat{a}$
+* Anpassung der Filterkoeffizienten
 
 z.B. Butterworth-Filter
 
 ### Wann sind physikalische Parameter vollständig identifizierbar?
+
+
 * $np = n+m+1$
 * Jacobi-Matrix $\delta f / \delta p$ ist regulär
 
 \newpage
 ##2.4 Rekursive MkQ
-Iterationsvorschrift -> siehe Skript
+
+* Herleitungsansatz: Ausgehend von $a_n$ ergibt sich mit der nächsten Messung $a_{n+1}$ und damit
+$\Phi_{n+1} = \begin{pmatrix}
+\Phi_N \\
+\varphi_{N+1}^T
+\end{pmatrix}$ -> 2 Seiten Herleitung ergibt Iterationsvorschrift:
+
+$$a_{N+1} = \underbrace{a_n}_{\text{vorheriger Parametervektor}} + \gamma_N(\underbrace{y[N+1]}_{\text{neuer Messwert}}- \underbrace{\Phi_{N+1}^T a_N}_{\text{vorhergesagter Ausgang}})$$
+
+Wahl der Startwerte:
+
+a) Nicht-rekursive MkQ
+b) Wahl von Standardwerten $a_0 = 0$ und $P_0^{-1} = \alpha I$
+
+ -> siehe Skript
 
 Vorteile:
-* TODO
-* ...
 
-### Bestimmung der Startwerte
-####Nutzung der nicht-rekursiven MkQ
-####Wahl von Standardwerten
+- Matrix-Inversion gespart
+- Rechenaufwand konstant, unabhängig von Menge der Daten
+- Rechenaufwand geringer
+- online implementierbar
+- deutlich weniger Speicherbedarf (vorheriger Parametervektor, aktuelles Messwert)
 
-Startwertwahl von a_0 = 0 $P_0 = 1/\alpha I$ (I: Einheitsmatrix).
-Dies führt für große Alpha zu $P_k \approx \phi_k^T \phi_k$
+
 
 ## Rekursive MkQ mit exponentiell nachlassendem Gedächtnis
+* mit Wichtungsmatrix
+$$W_N = \begin{pmatrix}
+\lambda^{N-1}  & & &\\
+& \dots &  &\\
+& &  \lambda &  \\
+& &  & 1 \\
+\end{pmatrix}$$
 
+* ältere Messwerte beeinflussen aktuelle Schätzung immer weniger (werden 'vergessen')
+* Ausgleich von Arbeitspunktwechsel oder Störungen
 
 ##2.5 Rechentechnische Umsetzung der MkQ
-TODO
+
+* Cholesky-Zerlegung (in Dreiecksmatrizen) vereinfacht Lösung von $A x = b$; nur ca. 50% Rechenaufwand im Vgl. zu Gauss
+* Orthogonalisierungsverfahren, Konditionierung, QR-Zerlegung -> siehe Skript
 
 ##2.6 Identifikation nicht-linearer Systeme
-**Hammerstein-Modell**:
-nicht-linear statisches System + dynamisch lineares System
+**Wiender-Modell**:
+dynamisch lineares System + nicht-linear statisches System
+
+###Hammerstein-Modell
+- nicht-linear statisches System + dynamisch lineares System
+
 
 Einfacher Ansatz für nicht-Linearität:
 $\widetilde{u}[k] = r_0 + r_1 \cdot u[k] + ... r_p \cdot {u[k]}^p$
 
-Ergibt lineares Modell mit mehreren Eingängen, darstellbar in der Form $y[k] = \phi a$
+Ergibt lineares Modell mit mehreren Eingängen, darstellbar in der Form $y[k] = \phi a$:
+
+                _____
+$u^0$ -> r_0 -> |$B(z^{-1})$ |
+
+$u^1$ -> r_1 -> |---/----- |---> Y
+
+$u^2$ -> r_2 -> |$A(z^{-1})$ |
+
+$u^p$ -> r_p -> |_____|
+
+(nicht die schönste ASCII-Art ...)
 
 
 ##2.7 Modifikationen der MkQ

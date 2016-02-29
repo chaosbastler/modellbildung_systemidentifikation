@@ -1,3 +1,4 @@
+\newpage
 #5. Identifikation nichtparametrischer Modelle
 
 ##5.1 Frequenzgang mit period. Anregung
@@ -15,7 +16,7 @@ Problem: reine Sinusschwingungen schwierig zu erzeugen
 * Bei kleineren Anregungsfrequenzen: Berücksichtigung der höheren harmonischen notwendig
 * Aus vorherigen Messungen ist Übertragungsverhalten für hohe Frequenzen bekannt -> Signalanteile können subtrahiert werden; somit wird Grundschwingung isoliert
 
-Nachteil: zeitaufwendig, da warten auf Einschwingen
+Nachteil: zeitaufwendig, da Warten auf Einschwingen
 
 Ausweg: Signale mit mehreren Frequenzanteilen
 
@@ -77,4 +78,59 @@ $\hat{R}_{u y} = \hat{\sigma}^2 g[i]$
 
 => Schätzung für Gewichtsfolge: $\hat{g}[i] = \frac{1}{\hat{\sigma}^2}  \hat{R}_{u y}$
 
-##Parameterschätzung für Differenzengleichungen
+##5.2.3 Parameterschätzung für Differenzengleichungen
+Ausgangspunkt Differenzengleichung:
+
+$$ a_n y[k-n] + a_{n-1} y[k-(n-1)] + ... + y[k] = b_m u[k-m] + ... b_0 u[k]$$
+...
+
+Umformung ergibt zusammengefasst:
+
+$$\hat{R}_{u,y}[j] = \begin{pmatrix} -\hat{R}_{u,y}[j-1] & \dots & -\hat{R}_{u,y}[j-n] & \hat{R}_{u}[j] & \dots & \hat{R}_{u}[j-m]  \end{pmatrix} \begin{pmatrix} a_1\\ \dots \\a_n \\ b_0\\ \dots \\b_n \end{pmatrix} $$
+
+Für $j=n, n+1, ...$: überbestimmtes GLS => MkQ
+
+
+##5.3 Parameterschätzung aus nicht parametrischen Modellen
+
+### Momentenmethode
+Entwicklung von $G(s) = \int_{0}^{\infty} g(t) e^{-st} dt$ in Taylor-Reihe:
+
+$$G(s) = ... = \underbrace{\int_{0}^{\infty} g(t) dt}_{M_0}  - s \underbrace{\int_{0}^{\infty} g(t) \cdot t dt}_{M_1} + \frac{s^2}{2} \underbrace{\int_{0}^{\infty} g(t) \cdot t^2 dt}_{M_2} + \dots$$
+
+
+$$G(s) = \sum_{k=0}^{\infty} \frac{-1^k}{k!} M_k s^k$$
+
+$M_k$ sind experimentell oder numerisch zu bestimmen.
+
+=> Gleichsetzen von Taylor-Reihe mit $G(s) = \frac{B(s)}{A(s)}$ ermöglicht Koeffizientenvergleich
+
+##5.4 Testsignale
+###5.4.1 Pseudo-Rausch-Binär-Signale
+
+Beim Erzeugen von Testsignalen sind binäre Signale zu bevorzugen.
+
+Diskretes binäres Rauschsignal (DRBs):
+regelloser Wechsel zwischen Werten +a und -a zu diskreten Zeitpunkten kT
+
+Zeitdiskrete Autokorrelationsfolge
+
+$$R_u[k] = \begin{cases}
+a^2 & k=0 \\
+0 & sonst
+\end{cases}$$
+
+(gleiche AKF wie diskretes weißes Rauschen mit beliebiger Amplitude)
+
+Für endl. Meßzeit ändert sich die AKF, d.h. sie muss im Einzelfall ermittelt werden
+
+-> Übergang zu periodischen Signalen (also deterministisch), die eine ähnliche AKF besitzen (**Pseudo-Rausch-Binär-Signal PRBS**)
+
+- Erzeugung durch (mit XORs) rückgekoppelte Schieberegister
+- für Rückkopplung bestimmter Stufen erfolgt Durchlaufen aller $2^n-1$ Belegungen des Registers bevor sich eine Belegung wiederholt
+- Periodenlänge: $(2^n-1) \cdot n$
+- Mittelwert: $\frac{N+1}{2} \cdot a - \frac{N-1}{2} \cdot a= \frac{a}{N}$
+- Autokorrelationsfolge: $R_u[k] = \begin{cases}
+a^2 & k=0, \pm N, \pm 2N \\
+\frac{a^2}{N} & sonst
+\end{cases}$

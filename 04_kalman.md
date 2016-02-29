@@ -9,7 +9,7 @@ y[k] &= C x[k] + e[k]
 \end{aligned}
 $$
 
-## Annahmen
+## 4.1 Grundannahmen
 * Systemmatrizen A,B,C bekannt
 * Eingang u[k], Ausgang y[k] bekannt
 * Systemrauschen v[k] und Messrauschen e[k]: unkorrelierte, mittelwertfreie Rauschprozesse
@@ -18,7 +18,7 @@ $$
 
 Schätzung $\hat{x}[k]$ des Zustandsvektors $x[k]$
 
-## Ansatz: Filterstruktur
+## 4.2 Ansatz: Filterstruktur
 
 $\hat{x}[k+1]$ = $\underbrace{ A \hat{x}[k] + B u[k] }_{\substack{\text{Prädiktionsterm}\\\text{``a priori Schätzung''}}} + \underbrace{K[k]}_{\substack{\text{Kalman-Matrix}\\\text{``Korrekturmatrix''}}} \underbrace{(y[k]-\hat{x}[k])}_{\substack{\text{Korrekturterm}}}$
 
@@ -51,4 +51,23 @@ $$
 
 * Schritte 2. und 3. iterativ für alle Messwerte wiederholen bis Schätzung des internen Zustands konvergiert
 
-## Kalman-Filter als Parameterschätzer
+## 4.3 Kalman-Filter als Parameterschätzer
+Ausgangspunkt: statisches, parameterlineares Modell
+
+$$y[k] = \varphi^T[k] a = + e[k]$$
+
+Modell als lineares Zustandsraummodell:
+$$a[k+1] = a[k]$$ -> interner Zustand = Parameter = konstant
+$$y[k] = \varphi^T[k] a[k] = + e[k]$$
+
+
+Kalman-Filter entspricht in dieser Form der rekursiven MkQ
+
+## 4.4 Extended Kalman-Filter
+
+$$x[k+1] = \underbrace{f(x[k], u[k])}_{\text{nicht lin. Fkt.}} + v[k]$$
+$$y[k] = \underbrace{h(x[k])}_{\text{nicht lin. Fkt.}} = + e[k]$$
+
+- Linearisieren der Systemmatrizen A[k], B[k] und C[k] um geschätzen Zustand
+- a posteriori Schätzung: $\hat{x}^-[k+1] = f(\hat{x}[k], u[k])$
+- sonst wie bei linear

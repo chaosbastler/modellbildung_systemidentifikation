@@ -1,12 +1,12 @@
 \newpage
 #2. Methode der kleinsten Fehlerquadrate
-Gegeben: Messdatenpaare, Modell y = f(u,a)
+Gegeben: Messdatenpaare, Modell $y = f(u,a)$
 
-Ziel: finde Parameter a, so dass $y_i \approx f(u_i,a)$ für Daten möglichst gut erfüllt wird
+Ziel: Finde Parameter a, so dass $y_i \approx f(u_i,a)$ für Daten möglichst gut erfüllt wird
 
--> Überbestimmtes Probem -> Minimierung von Modellfehler $$\epsilon_i = y_i - f(u_i,a)$$
+$\rightarrow$ Überbestimmtes Problem $\rightarrow$ Minimierung von Modellfehler $$\epsilon_i = y_i - f(u_i,a)$$
 
-Gütekriterium: $$L(a) = \sum \limits_{i=1}^{N} \epsilon_i^2 = \epsilon^T \cdot \epsilon$$
+Gütekriterium: quadratischer Fehler$$L(a) = \sum \limits_{i=1}^{N} \epsilon_i^2 = \epsilon^T \cdot \epsilon$$
 
 ##2.1 MkQ für Statische Systeme
 ### Parameterlineare Modelle

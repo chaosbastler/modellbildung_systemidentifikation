@@ -57,7 +57,7 @@ MLE liefert also für normalverteilte Fehler den gleichen Schätzer wie MkQ!
 ###6.1.3 Maximum-Likelihood-Schätzer für dynamische Systeme
 
 - MkQ: ARX-Modell
-- ML: Moving-Average-Modell (Allgemeiner)
+- ML: ARX-MAX-Modell? (Allgemeiner)
 
 ###6.2 Bayes-Methode
 -> auch Prozessparameter a als stoch. Größe modelliert

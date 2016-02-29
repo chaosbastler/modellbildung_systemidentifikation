@@ -1,11 +1,11 @@
 #Zusammenfassung Modellbildung und Systemidentifikation
 #1. Grundlagen
-###Norm
+##1.1 Norm
 Motivation: Maß für Fehler ist notwendig
 
 Eigenschaften:
 
-* Abbildung von Vektor auf reele Zahl
+* Abbildung von Vektor auf reelle Zahl
 * $||x|| = 0 \leftrightarrow x = 0$
 * $||\alpha \cdot x|| = |\alpha| \cdot ||x||$
 * $||x+y|| \leq  ||x|| +||y||$
@@ -37,7 +37,7 @@ Bsp für nicht induzierte Norm: Frobenius-Norm:
 
 $$||A||_F = \sqrt{trace(A^T \cdot A)}  $$
 
-##Dynamische Systeme
+##1.2 Dynamische Systeme
 * mind 1 Eingang, mind 1 Ausgang, enthält "Gedächtnis" (=Energiespeicher)
 * **linear**, wenn Superpositionsprinzip gilt:
 $$ G(\alpha_1 u_1 + \alpha_2 u_2 ) = \alpha_1 \cdot G \circ u_1 + \alpha_2 \cdot G \circ u_2 \text{ mit } \alpha_1, \alpha_2 \in \mathbb{R} $$
@@ -45,21 +45,53 @@ $$ G(\alpha_1 u_1 + \alpha_2 u_2 ) = \alpha_1 \cdot G \circ u_1 + \alpha_2 \cdot
 
 * nicht-parametrische Modellierung: Sprungantwort, Impulsantwort, Frequenzgang
 
-### Parametrische Modelle
-physikalische Modellierung => DGL => Laplace-Transformation => Zustandsraummdell mit Systemmatrizen
+###1.2.1 Parametrische Modelle
+
+#### Zustandsraumdarstellung aus physikalischem Modell
+physikalische Modellierung $\rightarrow$ DGL (evtl. Linearisierung um Ruhelage) 
+
+$\rightarrow$ Laplace-Transformation 
+
+$G(s)=\frac{b_m s^m + b_{m-1} s^{m-1} + \dots}{s^n+a_{n-1} s^{n-1} + \dots}$
+
+$\rightarrow$ Zustandsraummodell mit Systemmatrizen $A_c$ $B_c$ $C_c$
+
+$A_c=$
+$\begin{pmatrix}
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+-a_0 & -a_1 & \dots & -a_{n-1}
+\end{pmatrix}$
+$B_c=$
+$\begin{pmatrix}
+0 \\
+0 \\
+\dots \\
+1
+\end{pmatrix}$
+$C_c=$
+$\begin{pmatrix}
+b_0 & \dots & b_m & 0 & \dots & 0
+\end{pmatrix}$
 
 Abtastung liefert diskretes Modell:
 
-$$x[k+1] = A x[k] + B u[k]$$
-$$y[k]= C x[k]$$
+$$x[k+1] = A_d x[k] + B_d u[k]$$
+$$y[k]= C_d x[k]$$
 
-Berechnung der Systemmatrizen aus zeitkontinuierlichen Modell:
-$$A_D = e^{A^C \cdot \Delta t}$$
-$$B_D = B^C \cdot \int\limits_{\tau}^{\Delta t} e^{A^C \cdot \tau} d \tau$$
-$$C_D = C^C$$
+Diskretisierung des zeitkontinuierlichen Modells über Berechnung der Systemmatrizen:
 
-\newpage
-##Modellarten
+Annahmen:
+
+* Abtastung zu Zeitpunkten $t=k*\Delta t$
+* Stückweise konstantes Eingangssignal
+
+$$A_d = e^{A_c \cdot \Delta t}$$
+$$B_d = B_c \cdot \int\limits_{\tau}^{\Delta t} e^{A_c \cdot \tau} d \tau$$
+$$C_d = C_c$$
+
+##1.3 Modellarten
 
 u(z) : Systemeingang,
 v(z) : Fehler
@@ -72,7 +104,7 @@ $$y = \frac{1}{C(z)} \cdot v$$
 #### MA (Moving Average)
 $$y = D(z) \cdot v$$
 
-#### ARMA
+#### ARMA (autoregressiv + moving average)
 $$y = \frac{D(z)}{C(z)} \cdot v$$
 
 
@@ -84,7 +116,7 @@ $$y = \frac{B(z)}{A(z)} u + \frac{D(z)}{A(z)} v$$
 
 ### Klassifikation nach determ. Eingang (Ausgangsfehler-Modell):
 
-####Fir
+####FIR
 $$y = B(z) u + v$$
 
 ####OE (output error)

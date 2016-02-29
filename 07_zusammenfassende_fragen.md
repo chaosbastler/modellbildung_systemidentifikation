@@ -26,6 +26,7 @@
   * Nicht-lineare Systeme (Hammerstein-Modell)
   * Frequenzgang-Messung (aufwendig, zeitintensiv, nicht-parametrisches Modell nicht besonders nütztlich)
   * Erzeugung Pseudo-Rausch-Binär-Signal
+  * Identifikation physikalischer Parameter
 
 ## Weniger relevant
   * Matrixzerlegung

@@ -14,7 +14,7 @@ Gütekriterium: quadratischer Fehler$$L(a) = \sum \limits_{i=1}^{N} \epsilon_i^2
 
 mit $\epsilon	 = \text{Messwert} - \text{Modell}$
 
-Gleichungssystem in Matrix-Form:
+Gleichungssystem in Matrix-Form mit n Messwerten:
 
 $\begin{pmatrix}
 y_1 \\
@@ -22,9 +22,9 @@ y_1 \\
 y_n
 \end{pmatrix} =
 \begin{pmatrix}
-\phi^T(u_1) \\
+\varphi^T(u_1) \\
 \dots \\
-\phi^T(u_N)
+\varphi^T(u_n)
 \end{pmatrix}
 \begin{pmatrix}
 a_1 \\
@@ -50,7 +50,7 @@ Singulärwertzerlegung (SVD) kann für einfache Berechnung von $\phi^+$ genutzt 
 
 $\phi = U \cdot \Sigma \cdot V^T  \rightarrow \phi^+ = V \cdot \Sigma^+  \cdot U^T$
 
-mit: $\Sigma^+ = diag(\frac{1}{\sigma_1},\frac{1}{\sigma_2},...,\frac{1}{\sigma_n},0,...,0)$
+mit $\Sigma^+ = diag(\frac{1}{\sigma_1},\frac{1}{\sigma_2},...,\frac{1}{\sigma_n}, 0, \dots ,0)$
 
 ### ParameterNICHTlineare Modelle
 Ansatz wie bei parameterlinearen Modellen.
@@ -61,23 +61,22 @@ Ansatz wie bei parameterlinearen Modellen.
 
 Statt $\epsilon$ wird $\epsilon + \Delta \epsilon$ minimiert:
 
-$$\epsilon + \Delta \epsilon = \underbrace{y - f(u,a(u))}_{\epsilon} \underbrace{- \frac{\partial f}{\partial a} (u,a(u)) \cdot \Delta a(u)}_{\Delta \epsilon}$$
+$$\epsilon + \Delta \epsilon = \underbrace{y - f(u,a}_{\epsilon} \underbrace{- \frac{\partial f}{\partial a} (u,a \cdot \Delta a)}_{\Delta \epsilon}$$
 
-#### Gauß-Newton-Verfahren (gegf. mit Dämpfungsfaktor)
+#### Gauß-Newton-Verfahren (ggf. mit Dämpfungsfaktor)
 * Iterationsvorschrift: $a_{i+1} = a_i + \Delta a_i = a_i + J_i^T (y-f(u,a_i))$
 * keine gesicherte Konvergenz
-* => Dämpfungsfaktor: $a_{i+1} =  a_i + \alpha J_i^T (y-f(u,a_i))$
+* $\rightarrow$ mit Dämpfungsfaktor $\alpha$: $a_{i+1} =  a_i + \alpha J_i^T (y-f(u,a_i))$
 
 #### Gradientenverfahren (line search)
-* Iterationsvorschrift: $a_{i+1} = a_i + \alpha (\frac{\partial f}{\partial a} (u,a_i)^T$
+* Iterationsvorschrift: $a_{i+1} = a_i + \alpha (\frac{\partial f}{\partial a} (u,a_i))^T \epsilon$
 * $\alpha$ so wählen, dass L minimal wird
 
 #### Levenberg-Marquardt-Algorithmus
-* robuster als Gauß-Newton-Verfahren
--> Formel siehe Skript
+* robuster als Gauß-Newton-Verfahren $\rightarrow$ Formel siehe Skript
 
 \newpage
-##2.2 MkQ für Dynamische Systeme
+##2.2 MkQ für Dynamische Systeme    
 ###Dynamisch zeitdiskrete Systeme
 
 * Dynamische Modelle = ARX (autoregressive) Modelle
@@ -112,6 +111,7 @@ b_1\\
 b_m\\
 \end{pmatrix}
 }_{a_{N-1}}
++
 \underbrace{
 \begin{pmatrix}
 e[l] \\
@@ -134,7 +134,7 @@ $$a_{N-1} = \Phi_{N-1}^+ Y_{N-1} $$
 Ausgangspunkt DGL:
 $$y(kT) =
 \begin{pmatrix}
--y'(kT) & \dots & -y^{(n)}(kT)  & u(kT) & \dots & u^{(m)}(kT))\\
+-y'(kT) & \dots & -y^{(n)}(kT)  & u(kT) & \dots & u^{(m)}(kT)\\
 \end{pmatrix}
 \begin{pmatrix}
 a_1^c \\
@@ -151,7 +151,7 @@ Beschaffung von Zeitableitungen:
 
 a) Finite Differenzen (Vorwärts/Rückwärtsdifferenzenquotient)
 
-* $y'(kT) \approx \frac{y(kT)-y((k-1)T}{T}$
+* $y'(kT) \approx \frac{y(kT)-y((k-1)T)}{T}$
 * $y'(kT) \approx \frac{y((k+1)T)-y(kT)}{T}$
 
 Nachteil:
@@ -179,8 +179,8 @@ z.B. Butterworth-Filter
 ### Wann sind physikalische Parameter vollständig identifizierbar?
 
 
-* $np = n+m+1$
-* Jacobi-Matrix $\delta f / \delta p$ ist regulär
+* Anzahl physikalischer Parameter $n_p = n+m+1$ (Anzahl Modellparameter)
+* Jacobi-Matrix $\partial f / \partial p$ ist regulär
 
 \newpage
 ##2.4 Rekursive MkQ

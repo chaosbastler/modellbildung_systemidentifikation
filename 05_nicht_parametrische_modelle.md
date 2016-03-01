@@ -50,7 +50,7 @@ $\hat{R}_{u}'[j] =  \frac{1}{N-|j|} \sum \limits_{k=0}^{N-|j|-1} u[k-|j|] u[k]$
 
 Dieser Schätzer ist erwartungstreu, weist aber eine um den Faktor $N/(N-|j|)$ größere Varianz auf -> Praktisch wird ersterer verwendet
 
-##5.2.2 Schätzung der Gewichtsfolge
+###5.2.2 Schätzung der Gewichtsfolge / Impulsantwort
 Für lineare zeitdiskrete Systeme sind Ein- und Ausgangssignal mittels Faltungssumme verknüpft:
 
 $y[k] = g * u = \sum \limits_{l=0}^{\infty} g[k-l] u[l] = \sum \limits_{l=0}^{\infty} g[l] u[k-l]$
@@ -68,27 +68,24 @@ Lösung mittels MkQ liefert:
 
 $\hat{g} = \hat{R}_u^+ \hat{R}_{u y}$
 
-Falls Eingangssignal weißes Rauschen mit Autokorrelationsfunktion
+Falls Eingangssignal weißes Rauschen, dann folgt
 
-...
+$\hat{g}[i] = \frac{1}{\hat{\sigma}^2}  \hat{R}_{u y}[i]$
 
-Dann folgt:
+\newpage
 
-$\hat{R}_{u y} = \hat{\sigma}^2 g[i]$
+###5.2.3 Parameterschätzung für Differenzengleichungen
+- ermöglicht Schätzung der Parameter ohne aktive Anregung des Systems
 
-=> Schätzung für Gewichtsfolge: $\hat{g}[i] = \frac{1}{\hat{\sigma}^2}  \hat{R}_{u y}$
-
-##5.2.3 Parameterschätzung für Differenzengleichungen
 Ausgangspunkt Differenzengleichung:
+$$ a_n y[k-n] + a_{n-1} y[k-(n-1)] + ... + y[k] = b_m u[k-m] + ... + b_0 u[k]$$
 
-$$ a_n y[k-n] + a_{n-1} y[k-(n-1)] + ... + y[k] = b_m u[k-m] + ... b_0 u[k]$$
-...
+Darstellung mit Hilfe der Korrelationsfunktionen:
+$$\hat{R}_{uy}[j] = \begin{pmatrix} -\hat{R}_{uy}[j-1] & \dots & -\hat{R}_{uy}[j-n] & \vline & \hat{R}_{u}[j] & \dots & \hat{R}_{u}[j-m]  \end{pmatrix} \begin{pmatrix} a_1\\ \dots \\a_n \\ \hline b_0\\ \dots \\b_n \end{pmatrix} $$
 
-Umformung ergibt zusammengefasst:
+Für $j=n, n+1, ...$ ergibt sich überbestimmtes Gleichungssystem
 
-$$\hat{R}_{u,y}[j] = \begin{pmatrix} -\hat{R}_{u,y}[j-1] & \dots & -\hat{R}_{u,y}[j-n] & \hat{R}_{u}[j] & \dots & \hat{R}_{u}[j-m]  \end{pmatrix} \begin{pmatrix} a_1\\ \dots \\a_n \\ b_0\\ \dots \\b_n \end{pmatrix} $$
-
-Für $j=n, n+1, ...$: überbestimmtes GLS => MkQ
+$\rightarrow$ lösbar mittels MkQ
 
 
 ##5.3 Parameterschätzung aus nicht parametrischen Modellen
@@ -101,7 +98,7 @@ $$G(s) = ... = \underbrace{\int_{0}^{\infty} g(t) dt}_{M_0}  - s \underbrace{\in
 
 $$G(s) = \sum_{k=0}^{\infty} \frac{-1^k}{k!} M_k s^k$$
 
-$M_k$ sind experimentell oder numerisch zu bestimmen.
+$M_k$ sind experimentell oder numerisch aus $g(t)$ zu bestimmen
 
 => Gleichsetzen von Taylor-Reihe mit $G(s) = \frac{B(s)}{A(s)}$ ermöglicht Koeffizientenvergleich
 

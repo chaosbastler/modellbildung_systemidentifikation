@@ -101,7 +101,7 @@ $$G(s) = ... = \underbrace{\int_{0}^{\infty} g(t) dt}_{M_0}  - s \underbrace{\in
 
 $$G(s) = \sum_{k=0}^{\infty} \frac{-1^k}{k!} M_k s^k$$
 
-$M_k$ sind experimentell oder numerisch zu bestimmen.
+$M_k = \int_{0}^{\infty} g(t) \cdot t^k dt$ sind experimentell oder numerisch zu bestimmen.
 
 => Gleichsetzen von Taylor-Reihe mit $G(s) = \frac{B(s)}{A(s)}$ ermöglicht Koeffizientenvergleich
 

@@ -14,11 +14,11 @@ Problem: reine Sinusschwingungen schwierig zu erzeugen
 
 * Beginn bei hohen Frequenzen
 * Bei kleineren Anregungsfrequenzen: Berücksichtigung der höheren harmonischen notwendig
-* Aus vorherigen Messungen ist Übertragungsverhalten für hohe Frequenzen bekannt -> Signalanteile können subtrahiert werden; somit wird Grundschwingung isoliert
+* Aus vorherigen Messungen ist Übertragungsverhalten für hohe Frequenzen bekannt $\rightarrow$ Signalanteile können subtrahiert werden; somit wird Grundschwingung isoliert
 
 Nachteil: zeitaufwendig, da Warten auf Einschwingen
 
-Ausweg: Signale mit mehreren Frequenzanteilen
+Ausweg: Signale mit mehreren Freq uenzanteilen
 
 Allgemeine Nachteile:
 
@@ -37,16 +37,16 @@ Eigenschaften:
 * $R_{u y}[j] = R_{y u}[-j]$
 * $R_{u}[j] = R_{u}[-j]$
 
-Problem: Messung nur über endlichen Zeithorizont => Schätzung
+Problem: Messung nur über endlichen Zeithorizont $\rightarrow$ Schätzung
 
 Schätzung der Autokorrelationsfolge:
-$\hat{R}_{u}[j] =  \lim\limits_{N \to \infty} \frac{1}{N} \sum \limits_{k=0}^{N-|j|-1} u[k-|j|] u[k]$
+$\hat{R}_{u}[j] =  \frac{1}{N} \sum \limits_{k=0}^{N-|j|-1} u[k-|j|] u[k]$
 
 Bemerkung: Schätzung $\hat{R}_{u}[j]$ ist nicht erwartungstreu:
 $E\{\hat{R}_{u}[j]\} = (1-\frac{|j|}{N})R_u[j]$
 
 Andere Möglichkeit:
-$\hat{R}_{u}'[j] =  \lim\limits_{N \to \infty} \frac{1}{N-|j|} \sum \limits_{k=0}^{N-|j|-1} u[k-|j|] u[k]$
+$\hat{R}_{u}'[j] =  \frac{1}{N-|j|} \sum \limits_{k=0}^{N-|j|-1} u[k-|j|] u[k]$
 
 Dieser Schätzer ist erwartungstreu, weist aber eine um den Faktor $N/(N-|j|)$ größere Varianz auf -> Praktisch wird ersterer verwendet
 

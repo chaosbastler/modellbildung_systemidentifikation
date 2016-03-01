@@ -183,34 +183,42 @@ z.B. Butterworth-Filter
 * Jacobi-Matrix $\partial f / \partial p$ ist regulär
 
 \newpage
-##2.4 Rekursive MkQ
 
-* Herleitungsansatz: Ausgehend von $a_n$ ergibt sich mit der nächsten Messung $a_{n+1}$ und damit
+##2.5 Rechentechnische Umsetzung der MkQ
+
+* Cholesky-Zerlegung von $\phi$ (in Dreiecksmatrizen) vereinfacht Lösung von $a=\Phi y$; nur ca. 50% Rechenaufwand im Vgl. zu Gauss
+* Orthogonalisierungsverfahren, Konditionierung, QR-Zerlegung -> siehe Skript
+
+###2.5.3 Rekursive MkQ
+
+Herleitungsansatz: Ausgehend von $a_n$ ergibt sich mit der nächsten Messung $a_{n+1}$ und damit
 $\Phi_{n+1} = \begin{pmatrix}
 \Phi_N \\
 \varphi_{N+1}^T
-\end{pmatrix}$ -> 2 Seiten Herleitung ergibt Iterationsvorschrift:
+\end{pmatrix}$ $\rightarrow$ 2 Seiten Herleitung ergibt Iterationsvorschrift:
 
 $$a_{N+1} = \underbrace{a_n}_{\text{vorheriger Parametervektor}} + \gamma_N(\underbrace{y[N+1]}_{\text{neuer Messwert}}- \underbrace{\Phi_{N+1}^T a_N}_{\text{vorhergesagter Ausgang}})$$
 
-Wahl der Startwerte:
-
-a) Nicht-rekursive MkQ
-b) Wahl von Standardwerten $a_0 = 0$ und $P_0^{-1} = \alpha I$
-
- -> siehe Skript
-
-Vorteile:
+Vorteile der rekursiven MkQ:
 
 - Matrix-Inversion gespart
 - Rechenaufwand konstant, unabhängig von Menge der Daten
 - Rechenaufwand geringer
 - online implementierbar
-- deutlich weniger Speicherbedarf (vorheriger Parametervektor, aktuelles Messwert)
+- deutlich weniger Speicherbedarf (vorheriger Parametervektor, aktueller Messwert)
 
+#### Wahl der Startwerte
 
+a) Nicht-rekursive MkQ
 
-## Rekursive MkQ mit exponentiell nachlassendem Gedächtnis
+Nachteile:
+
+* Warten bis $N$ Werte vorhanden sind ($N > n+m+1$)
+* $P_n^{-1}$ muss erst rechenaufwendig bestimmt werden
+
+b) Wahl von Standardwerten $a_0 = 0$ und $P_0^{-1} = \alpha I$
+
+###2.5.4 Rekursive MkQ mit exponentiell nachlassendem Gedächtnis
 * mit Wichtungsmatrix
 $$W_N = \begin{pmatrix}
 \lambda^{N-1}  & & &\\
@@ -222,13 +230,8 @@ $$W_N = \begin{pmatrix}
 * ältere Messwerte beeinflussen aktuelle Schätzung immer weniger (werden 'vergessen')
 * Ausgleich von Arbeitspunktwechsel oder Störungen
 
-##2.5 Rechentechnische Umsetzung der MkQ
-
-* Cholesky-Zerlegung (in Dreiecksmatrizen) vereinfacht Lösung von $A x = b$; nur ca. 50% Rechenaufwand im Vgl. zu Gauss
-* Orthogonalisierungsverfahren, Konditionierung, QR-Zerlegung -> siehe Skript
-
 ##2.6 Identifikation nicht-linearer Systeme
-**Wiender-Modell**:
+**Wiener-Modell**:
 dynamisch lineares System + nicht-linear statisches System
 
 ###Hammerstein-Modell
@@ -240,46 +243,43 @@ $\widetilde{u}[k] = r_0 + r_1 \cdot u[k] + ... r_p \cdot {u[k]}^p$
 
 Ergibt lineares Modell mit mehreren Eingängen, darstellbar in der Form $y[k] = \phi a$:
 
-                _____
-$u^0$ -> r_0 -> |$B(z^{-1})$ |
+```
+              ___________
+u^0 -> r_0 -> |B(z^-1)  |
+u^1 -> r_1 -> |---/-----|---> Y
+u^2 -> r_2 -> |A(z^-1)  |
+u^p -> r_p -> |_________|
 
-$u^1$ -> r_1 -> |---/----- |---> Y
-
-$u^2$ -> r_2 -> |$A(z^{-1})$ |
-
-$u^p$ -> r_p -> |_____|
-
-(nicht die schönste ASCII-Art ...)
-
+```
 
 ##2.7 Modifikationen der MkQ
 ###2.7.1 Totale MkQ (orthogonale Regression)
-Minimierung des Fehlers der Ausgangsdaten F und des Fehlers der Eingangsdaten $\epsilon$:
+Minimierung des Fehlers der Ausgangsdaten $\epsilon$ und des Fehlers der Eingangsdaten F:
 
 $y + \epsilon = (\Phi + F)a$
+$\rightarrow$ $[\begin{pmatrix}\Phi & y\end{pmatrix} + \begin{pmatrix}F & \epsilon\end{pmatrix}] \begin{pmatrix}a\\-1\end{pmatrix} = 0$
 
-=> $[(\Phi y) + (F \epsilon)] \begin{pmatrix}a\\-1\end{pmatrix}$
-
-=> Minimierung von $(F \epsilon)$ im Sinne der Frobeniusnorm.
+=> Minimierung von Fehler $\begin{pmatrix}F & \epsilon\end{pmatrix}$ im Sinne der Frobeniusnorm
 
 ###Einschub: Singulärwertzerlegung
-Mann kann Matrizen unter gewissen Vorraussetzungen folgendermaßen zerlegen:
+Man kann Matrizen unter gewissen Vorraussetzungen folgendermaßen zerlegen:
 
-$C = U \Sigma V^T$
+$$C = U \Sigma V^T$$
 
-TODO
+- Approximation von C durch "wegwerfen" von unteren Elementen aus $\Sigma$
+- Anwendung: Kompression
 
 ###2.7.2 Methode der Hilfsvariablen
-Anwendung: bei verzerrten Schätzern (ARX-Modell nicht perfekt)
+Anwendung: Beseitigung des Mittelwertes/Bias des Ausgangsfehlers
 
 Prinzip: Multiplikation der Modellfehlergleichung mit sog. Hilfsvariablen:
 $W^T \epsilon = W^T y - W^T \Phi a$
 
 W ist so wählen, dass Spalten unkorreliert mit $\epsilon$ sind.
 
-=> Lösung der modifizierten Normalengleichung: $a = (W^T \Phi)^-1 W^T y$
+=> Lösung der modifizierten Normalengleichung: $a_N = (W^T \Phi)^{-1} W^T y$
 
-Wahl von W:
+Ablauf:
 
 1. Schätzen von Parametervektor mit MkQ: $\hat{a} = \Phi^+ y$
 
@@ -287,6 +287,6 @@ Wahl von W:
 
 3. W = ... (siehe Skript)
 
-4. Schätzung mittels Hilfsvariablen
+4. Schätzung für $a_N$ mittels Hilfsvariablen (siehe modifizierte Normalengleichung)
 
-Iteratives Wiederholen von 2-4 beseitigt Bias von MkQ Schätzer
+Iteratives Wiederholen der Schritte 2-4

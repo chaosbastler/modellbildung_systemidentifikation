@@ -107,7 +107,7 @@ $M_k = \int_{0}^{\infty} g(t) \cdot t^k dt$ sind experimentell oder numerisch zu
 
 Beim Erzeugen von Testsignalen sind binäre Signale zu bevorzugen.
 
-Diskretes binäres Rauschsignal (DRBs):
+Diskretes binäres Rauschsignal (DRBS):
 regelloser Wechsel zwischen Werten +a und -a zu diskreten Zeitpunkten kT
 
 Zeitdiskrete Autokorrelationsfolge
@@ -121,13 +121,13 @@ a^2 & k=0 \\
 
 Für endl. Meßzeit ändert sich die AKF, d.h. sie muss im Einzelfall ermittelt werden
 
--> Übergang zu periodischen Signalen (also deterministisch), die eine ähnliche AKF besitzen (**Pseudo-Rausch-Binär-Signal PRBS**)
+$\rightarrow$ Übergang zu periodischen Signalen (also deterministisch), die eine ähnliche AKF besitzen (**Pseudo-Rausch-Binär-Signal PRBS**)
 
 - Erzeugung durch (mit XORs) rückgekoppelte Schieberegister
 - für Rückkopplung bestimmter Stufen erfolgt Durchlaufen aller $2^n-1$ Belegungen des Registers bevor sich eine Belegung wiederholt
-- Periodenlänge: $(2^n-1) \cdot n$
+- Periodenlänge: $(2^n-1)$
 - Mittelwert: $\frac{N+1}{2} \cdot a - \frac{N-1}{2} \cdot a= \frac{a}{N}$
 - Autokorrelationsfolge: $R_u[k] = \begin{cases}
 a^2 & k=0, \pm N, \pm 2N \\
-\frac{a^2}{N} & sonst
+-\frac{a^2}{N} & sonst
 \end{cases}$

@@ -79,8 +79,7 @@ $$\epsilon + \Delta \epsilon = \underbrace{y - f(u,a}_{\epsilon} \underbrace{- \
 ##2.2 MkQ für Dynamische Systeme    
 ###Dynamisch zeitdiskrete Systeme
 
-* Dynamische Modelle = ARX (autoregressive) Modelle
-* Differenzengleichung der Form:
+* Differenzengleichung für ARX Modell der Form:
 $$y[k] = b_m u[k-m]+ b_{m-1} u[k-m+1] + \dots + b_{0} u[k] + \epsilon[k] - (a_n y[k-n] + \dots + a_1 y[k-1])$$
 * (Sonderfall: FIR mit $y[k] = b_m u[k-m]+ b_{m-1} u[k-m+1] + \dots + b_{0} u[k]$; Spezialfall Output-Error Modell)
 * Gleichungssystem in Matrix-Form:

@@ -29,11 +29,11 @@ $$\frac{\partial(L)}{\partial{a}} = \sum\limits_{i=1}^N \frac{\partial \ln{p(x_i
 
 Für parameterlineare Systeme der Form $y_i = \Phi(u_i) \cdot a + \epsilon_i$
 mit normalverteiltem, mittelwertfreiem Fehler $\epsilon_i$ mit Standardabweichung $\sigma_\epsilon$
-berechnet sich die Wahrschenlichkeit des Auftretens der Folge $\epsilon_1, \epsilon_2, ..., \epsilon_N$ zu:
+berechnet sich die Wahrscheinlichkeit des Auftretens der Folge $\epsilon_1, \epsilon_2, ..., \epsilon_N$ zu:
 
 $$P(\epsilon) = \frac{1}{\sqrt{2 \pi \sigma_{\epsilon}^2} } exp(-\frac{\epsilon^T \epsilon}{2 \sigma_{\epsilon}^2})$$
 
-Es wird nun die Wahrschenlichkeit des Auftretens der Abweichung $\epsilon = y - \Phi u$ maximiert.
+Es wird nun die Wahrscheinlichkeit des Auftretens der Abweichung $\epsilon = y - \Phi u$ maximiert.
 
 Log-Likelihood-Funktion:
 

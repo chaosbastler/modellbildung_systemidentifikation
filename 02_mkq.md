@@ -44,7 +44,7 @@ $$\Phi^T y = \Phi^T \Phi a$$
 
 Gleichung umstellen ergibt Lösung :
 
-$a = (\phi^T \cdot \phi)^{-1} \cdot \phi \cdot y = \phi^+ \cdot y$
+$a = (\phi^T \cdot \phi)^{-1} \cdot \phi^T \cdot y = \phi^+ \cdot y$
 
 Singulärwertzerlegung (SVD) kann für einfache Berechnung von $\phi^+$ genutzt werden:
 

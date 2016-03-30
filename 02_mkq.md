@@ -61,7 +61,7 @@ Ansatz wie bei parameterlinearen Modellen.
 
 Statt $\epsilon$ wird $\epsilon + \Delta \epsilon$ minimiert:
 
-$$\epsilon + \Delta \epsilon = \underbrace{y - f(u,a}_{\epsilon} \underbrace{- \frac{\partial f}{\partial a} (u,a \cdot \Delta a)}_{\Delta \epsilon}$$
+$$\epsilon + \Delta \epsilon = \underbrace{y - f(u,a)}_{\epsilon} \underbrace{- \frac{\partial f}{\partial a} (u,a) \cdot \Delta a)}_{\Delta \epsilon}$$
 
 #### Gauß-Newton-Verfahren (ggf. mit Dämpfungsfaktor)
 * Iterationsvorschrift: $a_{i+1} = a_i + \Delta a_i = a_i + J_i^T (y-f(u,a_i))$
@@ -170,8 +170,8 @@ Adaptives Zustandsvariablenfilter
 
 Iterationsvorschrift:
 
-* Schätzung Nennerpolynom $\hat{a}$
-* Anpassung der Filterkoeffizienten
+* Schätzung Nennerpolynom $\hat{a}_i$
+* Anpassung der Filterkoeffizienten $f_i=\hat{a}_i$
 
 z.B. Butterworth-Filter
 
@@ -191,12 +191,12 @@ z.B. Butterworth-Filter
 ###2.5.3 Rekursive MkQ
 
 Herleitungsansatz: Ausgehend von $a_n$ ergibt sich mit der nächsten Messung $a_{n+1}$ und damit
-$\Phi_{n+1} = \begin{pmatrix}
+$\Phi_{N+1} = \begin{pmatrix}
 \Phi_N \\
 \varphi_{N+1}^T
 \end{pmatrix}$ $\rightarrow$ 2 Seiten Herleitung ergibt Iterationsvorschrift:
 
-$$a_{N+1} = \underbrace{a_n}_{\text{vorheriger Parametervektor}} + \gamma_N(\underbrace{y[N+1]}_{\text{neuer Messwert}}- \underbrace{\Phi_{N+1}^T a_N}_{\text{vorhergesagter Ausgang}})$$
+$$a_{N+1} = \underbrace{a_N}_{\text{vorheriger Parametervektor}} + \gamma_N(\underbrace{y[N+1]}_{\text{neuer Messwert}}- \underbrace{\Phi_{N+1}^T a_N}_{\text{vorhergesagter Ausgang}})$$
 
 Vorteile der rekursiven MkQ:
 
